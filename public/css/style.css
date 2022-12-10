@@ -9,7 +9,7 @@
 }
 
 :root {
-  --primary-color: #ffa500;
+  --primary-color: #ffd700;
   --primary-dark: #333;
 }
 
@@ -78,6 +78,7 @@ main {
   width: 100%;
   height: 100%;
   background: var(--primary-color);
+  padding-bottom: 1rem;
 }
 
 .showcase h1 {
@@ -127,6 +128,7 @@ form button:hover {
 .image {
   width: 100%;
   margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 img {
