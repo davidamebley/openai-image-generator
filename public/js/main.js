@@ -43,6 +43,9 @@ const generateImageRequest = async (prompt, size) => {
 
         hideSpinner();
 
+        // Show Save Image Button
+        document.getElementById('save-image').style.display = 'block';
+
     } catch (error) {
         document.querySelector('.msg').innerHTML = error;
     }
@@ -61,6 +64,7 @@ const resetResult = () => {
     document.querySelector('.msg').textContent = '';
     document.querySelector('#image').src = '';
     document.querySelector('#image').innerHTML = '';
+    document.getElementById("save-image").style.display = "none";
 }
 
 document.querySelector('#image-form').addEventListener('submit', onSubmit);

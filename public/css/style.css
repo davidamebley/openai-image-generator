@@ -108,7 +108,8 @@ form select {
   margin-bottom: 1rem;
 }
 
-form button {
+form button,
+.image-container button {
   font-size: 20px;
   padding: 1rem 2rem;
   border: none;
@@ -122,6 +123,13 @@ form button {
 form button:hover {
   transform: scale(1.1);
 }
+.image-container button:hover {
+  transform: scale(1.1);
+}
+
+#save-image {
+  display: none;
+}
 
 /* Image */
 
@@ -129,6 +137,12 @@ form button:hover {
   width: 100%;
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+.image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 img {
