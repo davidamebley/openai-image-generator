@@ -1,3 +1,9 @@
+// Some Globals
+const searchedImage = {
+    name: '',
+    url: '',
+};
+
 const onSubmit = (e) => {
     e.preventDefault();
 
@@ -10,7 +16,11 @@ const onSubmit = (e) => {
     }
 
     generateImageRequest(prompt, size);
-}
+};
+
+const onSaveImage = () => {
+    handleSaveImage();
+};
 
 const generateImageRequest = async (prompt, size) => {
     try {
@@ -40,6 +50,9 @@ const generateImageRequest = async (prompt, size) => {
 
         const imageUrl = data.data;
         document.querySelector('#image').src = imageUrl;
+        // Collecting Data for Saving
+        searchedImage.url = imageUrl;
+        searchedImage.name = prompt;
 
         hideSpinner();
 
@@ -49,6 +62,15 @@ const generateImageRequest = async (prompt, size) => {
     } catch (error) {
         document.querySelector('.msg').innerHTML = error;
     }
+}
+
+const handleSaveImage = () => {
+    // alert(searchedImage.name + '\n' + searchedImage.url);
+    const imgObj = {
+        name: searchedImage.name,
+        url: searchedImage.url,
+    }
+    
 }
 
 const showSpinner = () => {
@@ -67,4 +89,6 @@ const resetResult = () => {
     document.getElementById("save-image").style.display = "none";
 }
 
+// Trigger Events
 document.querySelector('#image-form').addEventListener('submit', onSubmit);
+document.querySelector('#save-image').addEventListener('click', onSaveImage);
