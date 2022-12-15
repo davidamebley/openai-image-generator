@@ -1,3 +1,5 @@
+import { mongoConnect } from "../..";
+
 // Some Globals
 const searchedImage = {
     name: '',
@@ -64,13 +66,62 @@ const generateImageRequest = async (prompt, size) => {
     }
 }
 
-const handleSaveImage = () => {
+const handleSaveImage = async () => {
     // alert(searchedImage.name + '\n' + searchedImage.url);
     const imgObj = {
         name: searchedImage.name,
         url: searchedImage.url,
     }
+
+    const uri = 'mongodb://admin:password@localhost:27017';
+
+    try {
+
+        // const client = await MongoClient.connect(uri,{ useNewUrlParser: true });
+        const client = await mongoConnect();
+        
+        const db = client.db('openai-image-generator');
+
+        db().collection('saved-images');
+        await client.insertOne(
+            {
+                name: 'spot',
+                kind: 'dog'
+            },
+            (err, result) => {
+                if (err) throw err;
+                console.log('Save result..: ', result);
+                client.close();
+            }
+        );
     
+      } catch(e) {
+        console.error(e)
+      }
+
+    //   Prev try catch
+    /* try {
+
+        const client = await MongoClient.connect(uri,{ useNewUrlParser: true });
+        
+        const db = client.db('openai-image-generator');
+
+        client.db().collection('saved-images');
+        await client.insertOne(
+            {
+                name: 'spot',
+                kind: 'dog'
+            },
+            (err, result) => {
+                if (err) throw err;
+                console.log('Save result..: ', result);
+                client.close();
+            }
+        );
+    
+      } catch(e) {
+        console.error(e)
+      } */
 }
 
 const showSpinner = () => {
