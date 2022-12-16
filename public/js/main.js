@@ -1,4 +1,5 @@
 import { mongoConnect } from "../..";
+// const mongoConnect = require('../../index.js');
 
 // Some Globals
 const searchedImage = {

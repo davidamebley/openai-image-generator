@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index",
     "dev": "nodemon index"
@@ -19,7 +20,8 @@
   },
   "homepage": "https://github.com/davidamebley/openai-image-generator#readme",
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "webpack": "^5.75.0"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
