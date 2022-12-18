@@ -1,5 +1,4 @@
-// import { mongoConnect } from "../..";
-const mongoConnect = require('../../index.js');
+// import mongoConnect from "../..";
 
 // Some Globals
 const searchedImage = {
@@ -22,7 +21,10 @@ const onSubmit = (e) => {
 };
 
 const onSaveImage = () => {
-    handleSaveImage();
+    // Use some dummy data first
+    const imageName = searchedImage.name;
+    const imageUrl = searchedImage.url;
+    handleSaveImage(imageName, imageUrl);
 };
 
 const generateImageRequest = async (prompt, size) => {
@@ -67,62 +69,46 @@ const generateImageRequest = async (prompt, size) => {
     }
 }
 
-const handleSaveImage = async () => {
-    // alert(searchedImage.name + '\n' + searchedImage.url);
-    const imgObj = {
-        name: searchedImage.name,
-        url: searchedImage.url,
-    }
-
-    const uri = 'mongodb://admin:password@localhost:27017';
-
+const handleSaveImage = async (name, url) => {
     try {
+        showSpinner();
 
-        // const client = await MongoClient.connect(uri,{ useNewUrlParser: true });
-        const client = await mongoConnect();
-        
-        const db = client.db('openai-image-generator');
-
-        db().collection('saved-images');
-        await client.insertOne(
-            {
-                name: 'spot',
-                kind: 'dog'
+        const response = await fetch('/openai/saveimage', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                
             },
-            (err, result) => {
-                if (err) throw err;
-                console.log('Save result..: ', result);
-                client.close();
-            }
-        );
-    
-      } catch(e) {
-        console.error(e)
-      }
+            body: JSON.stringify({
+                name,
+                url
+            })
+        });
 
-    //   Prev try catch
-    /* try {
+        if (!response.ok) {
+            hideSpinner();
+            resetResult();
+            throw new Error(`Your image could not be generated. Please make sure your description does not violate `+ `<a href="https://labs.openai.com/policies/content-policy" target="_blank">OPENAI\'s Content Policy </a>`);
+        }
 
-        const client = await MongoClient.connect(uri,{ useNewUrlParser: true });
-        
-        const db = client.db('openai-image-generator');
+        resetResult();
+        const data = await response.json();
+        // console.log('generated image', data);
 
-        client.db().collection('saved-images');
-        await client.insertOne(
-            {
-                name: 'spot',
-                kind: 'dog'
-            },
-            (err, result) => {
-                if (err) throw err;
-                console.log('Save result..: ', result);
-                client.close();
-            }
-        );
-    
-      } catch(e) {
-        console.error(e)
-      } */
+        const imageUrl = data.data;
+        document.querySelector('#image').src = imageUrl;
+        // Collecting Data for Saving
+        searchedImage.url = imageUrl;
+        searchedImage.name = prompt;
+
+        hideSpinner();
+
+        // Show Save Image Button
+        document.getElementById('save-image').style.display = 'block';
+
+    } catch (error) {
+        document.querySelector('.msg').innerHTML = error;
+    }
 }
 
 const showSpinner = () => {

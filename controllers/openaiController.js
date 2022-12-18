@@ -1,5 +1,4 @@
-// const { Configuration, OpenAIApi } = require('openai');
-import { Configuration, OpenAIApi } from 'openai';
+const { Configuration, OpenAIApi } = require('openai');
 
 const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
@@ -41,4 +40,4 @@ const generateImage = async (req, res) => {
     }
 };
 
-export { generateImage };
+if (typeof module !== 'undefined') module.exports = { generateImage };
