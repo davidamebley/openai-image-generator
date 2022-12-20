@@ -85,10 +85,10 @@ const handleSaveImage = async (name, url) => {
             })
         });
 
-        if (!response.ok) {
+        if (response.status !== 201) {
             hideSpinner();
             resetResult();
-            throw new Error(`Your image could not be generated. Please make sure your description does not violate `+ `<a href="https://labs.openai.com/policies/content-policy" target="_blank">OPENAI\'s Content Policy </a>`);
+            throw new Error('Error saving image. Please try again');
         }
 
         resetResult();
