@@ -4,13 +4,13 @@ const saveImage = async (req, res) => {
     let response = res;
     const { imageName, imageUrl } = req.body;
 
-    const uri = 'mongodb://admin:password@localhost:27017';
+    const uri = `mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@localhost:27017`;
 
     // Testing Some code
-    MongoClient.connect('mongodb://admin:password@localhost:27017', {useNewUrlParser:true,useUnifiedTopology: true }, function (err, client){
+    MongoClient.connect(uri, {useNewUrlParser:true,useUnifiedTopology: true }, function (err, client){
         if (err) throw err;
 
-        const db = client.db('openai-image-generator');
+        const db = client.db('openai');
 
         console.log('Successfully connected to OpenAIImageGen DB');
         db.collection('saved-images').insertOne({name: 'Trying', url: 'someurl'}, function (err, res){
