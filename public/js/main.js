@@ -85,7 +85,7 @@ const handleSaveImage = async (name, url) => {
             })
         });
 
-        if (response.status !== 201) {
+        if (response.statusCode !== 201) {
             hideSpinner();
             resetResult();
             throw new Error('Error saving image. Please try again');

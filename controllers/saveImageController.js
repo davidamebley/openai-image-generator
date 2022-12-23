@@ -9,14 +9,28 @@ const saveImage = async (req, res) => {
     const dbCollection = 'images';
     const { imageName, imageUrl } = req.body;
 
-    // const uri = 'mongodb://admin:password@localhost:27017/admin';
-    const uri = `mongodb://${encodeURIComponent('admin')}:${encodeURIComponent('password')}@localhost:27017/${encodeURIComponent(DATABASE_NAME)}?authSource=admin`;
-    // const uri = `mongodb://localhost:27017/${DATABASE_NAME}`;
+    const uri = 'mongodb://admin:password@127.0.0.1:27017/`';
+    // const uri = `mongodb://${encodeURIComponent('davidamebley')}:${encodeURIComponent('password')}@localhost:27017/${encodeURIComponent(DATABASE_NAME)}?authSource=admin`;
+    // const uri = `mongodb://127.0.0.1:27017/${DATABASE_NAME}`;
+
+    MongoClient.connect('mongodb://davidamebley:password@localhost:27017', function(err, client){
+        if (err) throw err;
+        console.log('Connected to Database Server');
+        let db = client.db('openai');
+        let query = { userid: 1 };
+        db.collection('images').insertOne({name: 'Trying', url: 'someurl'}, function(err, result){
+            if (err) throw err;
+            console.log('Save successful');
+            client.close();
+            response.send(result);
+            // console.log('Response:.. ', response)
+        });
+    });
 
     // Testing Some code
     const client = new MongoClient(uri, {useNewUrlParser:true});
 
-        try {
+        /* try {
             await client.connect();
             db = client.db(DATABASE_NAME);
 
@@ -29,7 +43,7 @@ const saveImage = async (req, res) => {
             return result;
         } catch (error) {
             console.log('MongoClient Error log:.. ',error);
-        }
+        } */
 
         
 
