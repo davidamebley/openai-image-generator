@@ -6,6 +6,8 @@ const searchedImage = {
     url: '',
 };
 
+let isImageSaved = false;
+
 const onSubmit = (e) => {
     e.preventDefault();
 
@@ -21,10 +23,12 @@ const onSubmit = (e) => {
 };
 
 const onSaveImage = () => {
-    // Use some dummy data first
-    const imageName = searchedImage.name;
-    const imageUrl = searchedImage.url;
-    handleSaveImage(imageName, imageUrl);
+    // image data
+    if (!isImageSaved){
+        const imageName = searchedImage.name;
+        const imageUrl = searchedImage.url;
+        handleSaveImage(imageName, imageUrl);
+    }
 };
 
 const generateImageRequest = async (prompt, size) => {
@@ -114,11 +118,16 @@ const hideSpinner = () => {
 }
 
 const resetResult = () => {
+    isImageSaved = false
     document.querySelector('.msg').innerHTML = '';
     document.querySelector('.msg').textContent = '';
+    document.querySelector('.save-msg').innerHTML = '';
+    document.querySelector('.save-msg').textContent = '';
     document.querySelector('#image').src = '';
     document.querySelector('#image').innerHTML = '';
     document.getElementById("save-image").style.display = "none";
+    document.getElementById('save-image').className = 'btn'
+    document.getElementById('save-image').innerHTML = 'Save to Previous Searches'
 }
 const removeSaveMessage = () => {
     document.querySelector('.save-msg').innerHTML = '';
@@ -128,7 +137,10 @@ const showSaveSuccess = () => {
     document.querySelector('.save-msg').innerHTML = 'Data saved successfully';
 }
 const disableSaveButton = () => {
+    isImageSaved = true;
     document.getElementById('save-image').className = 'disabled-button'
+    document.getElementById('save-image').innerHTML = 'Image saved'
+    // document.getElementById('save-image').style.backgroundColor = 'blue';
 }
 const showSaveButton = () => {
     document.getElementById('save-image').style.display = 'block';

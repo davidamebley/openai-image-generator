@@ -109,7 +109,7 @@ form select {
 }
 
 form button,
-.image-container button {
+.image-container .btn {
   font-size: 20px;
   padding: 1rem 2rem;
   border: none;
@@ -125,7 +125,7 @@ form button,
   padding: 1rem 2rem;
   border: none;
   border-radius: 5px;
-  background: rgb(52, 49, 49);
+  background: rgb(98, 96, 96);
   color: #fff;
   cursor: not-allowed;
   margin-top: 20px;
@@ -134,7 +134,7 @@ form button,
 form button:hover {
   transform: scale(1.1);
 }
-.image-container button:hover {
+.image-container .btn:hover {
   transform: scale(1.1);
 }
 
