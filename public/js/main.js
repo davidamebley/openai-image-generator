@@ -62,7 +62,7 @@ const generateImageRequest = async (prompt, size) => {
         hideSpinner();
 
         // Show Save Image Button
-        document.getElementById('save-image').style.display = 'block';
+        showSaveButton();
 
     } catch (error) {
         document.querySelector('.msg').innerHTML = error;
@@ -71,6 +71,7 @@ const generateImageRequest = async (prompt, size) => {
 
 const handleSaveImage = async (name, url) => {
     try {
+        removeSaveMessage();
         showSpinner();
 
         const response = await fetch('/openai/saveimage', {
@@ -84,30 +85,23 @@ const handleSaveImage = async (name, url) => {
                 url
             })
         });
+        
+        hideSpinner();
 
-        if (response.statusCode !== 201) {
+        if (!response.ok) {
+            console.log('Acknowledged..:', response);
             hideSpinner();
-            resetResult();
+            removeSaveMessage();
             throw new Error('Error saving image. Please try again');
         }
 
-        resetResult();
-        const data = await response.json();
-        // console.log('generated image', data);
-
-        const imageUrl = data.data;
-        document.querySelector('#image').src = imageUrl;
-        // Collecting Data for Saving
-        searchedImage.url = imageUrl;
-        searchedImage.name = prompt;
-
-        hideSpinner();
-
-        // Show Save Image Button
-        document.getElementById('save-image').style.display = 'block';
+        //Disable button
+        disableSaveButton();
+        showSaveSuccess();
 
     } catch (error) {
-        document.querySelector('.msg').innerHTML = error;
+        hideSpinner();
+        document.querySelector('.save-msg').innerHTML = error;
     }
 }
 
@@ -125,6 +119,20 @@ const resetResult = () => {
     document.querySelector('#image').src = '';
     document.querySelector('#image').innerHTML = '';
     document.getElementById("save-image").style.display = "none";
+}
+const removeSaveMessage = () => {
+    document.querySelector('.save-msg').innerHTML = '';
+    document.querySelector('.save-msg').textContent = '';
+}
+const showSaveSuccess = () => {
+    document.querySelector('.save-msg').innerHTML = 'Data saved successfully';
+}
+const disableSaveButton = () => {
+    document.getElementById('save-image').className = 'disabled-button'
+}
+const showSaveButton = () => {
+    document.getElementById('save-image').style.display = 'block';
+    document.getElementById('save-image').disabled = false;
 }
 
 // Trigger Events

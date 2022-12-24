@@ -120,6 +120,17 @@ form button,
   margin-top: 20px;
 }
 
+.disabled-button {
+  font-size: 20px;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 5px;
+  background: rgb(52, 49, 49);
+  color: #fff;
+  cursor: not-allowed;
+  margin-top: 20px;
+}
+
 form button:hover {
   transform: scale(1.1);
 }
@@ -155,7 +166,11 @@ img {
   text-align: center;
   margin-top: 1rem;
 }
-
+.save-msg {
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 0.5rem;
+}
 footer {
   left: 0;
   bottom: 0;
