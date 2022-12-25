@@ -18,7 +18,7 @@ const saveImage = async (req, res) => {
             //Avoid duplicate urls
             db.collection(dbCollection).createIndex({ "url": 1 }, { unique: true });
             //Insert data
-            db.collection(dbCollection).insertOne({name: req.body.name, url:req.body.url}, function(err, result){
+            db.collection(dbCollection).insertOne({name: req.body.name, url:req.body.url, createdAt: new Date(), lastModified: new Date()}, function(err, result){
                 if (err) throw err.message;
                 console.log('Save successful');
                 client.close();
