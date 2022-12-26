@@ -33,4 +33,10 @@ const saveImage = async (req, res) => {
     });
 }
 
-module.exports = {saveImage};
+//Get saved images
+const getSavedImages = async (req, res) => {
+    res.send('You viewing saved images page');
+    return 'You viewing saved images page';
+}
+
+module.exports = {saveImage, getSavedImages};
