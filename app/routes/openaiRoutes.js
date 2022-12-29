@@ -7,10 +7,9 @@ const router = express.Router();
 
 router.post('/generateimage', generateImage);
 router.post('/saveimage', saveImage);
-// router.get('/saved-images', getSavedImages);
-router.get('/saved-images', function(request, response) {
-    response.render('../public/index.html');
-    // response.send('Saved Images Page');
-});
+
+/* router.get('/saved-images', function(request, response) {
+    response.render('../public/views/pages/index');
+}); */
 
 module.exports = router
