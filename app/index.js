@@ -16,9 +16,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Temp snippet
-// app.get('/saved-images', (req, res) =>{
-//     res.render('./public/views/pages/index')
-// });
+app.get('/saved-images', (req, res) =>{
+    res.render('./public/views/pages/saved-images')
+});
 
 // Add route  //require('./routes/openaiRoutes')
 app.use('/openai', require('./routes/openaiRoutes'));
