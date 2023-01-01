@@ -3,6 +3,9 @@ const express = require('express');
 const dotenv = require('dotenv').config();
 const port = process.env.PORT || 5000;
 
+//A temp require. Will be moved to openaiRoutesSoon
+const getSavedImages = require('./controllers/getSavedImagesController');
+
 const app = express();
 
 app.set('views', __dirname, 'public/views');
@@ -18,6 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Temp snippet
 app.get('/saved-images', (req, res) =>{
     res.render('./public/views/pages/saved-images')
+    getSavedImages.getImages();
 });
 
 // Add route  //require('./routes/openaiRoutes')
