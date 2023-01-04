@@ -5,7 +5,7 @@ const getImages = async (req, res) => {
     const DATABASE_NAME = 'openai';
     const dbCollection = 'images';
 
-    MongoClient.connect(`mongodb://${process.env.MONGO_DB_USERNAME}:${process.env.MONGO_DB_PWD}@mongodb:27017`, function(err, client){
+    MongoClient.connect(`mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@localhost:27017`, function(err, client){
         if (err) throw err;
         
         try {
@@ -13,10 +13,11 @@ const getImages = async (req, res) => {
             console.log('Connected to Database Server');
             let db = client.db(DATABASE_NAME);
             //Get data. projection includes (1)/excludes(0) some fields
-            db.collection(dbCollection).find({}, {projection: {_id: 0, name: 1, url: 1, createdAt: 1}}).toArray(function(err, result) {
+            db.collection(dbCollection).find({}, {projection: {_id: 0, name: 1, url: 1, createdAt: 1}}).toArray(async function(err, result) {
                 if (err) throw err;
                 console.log('Returned documents: ',result);
                 client.close();
+                return await result;
             });
 
         } catch (error) {

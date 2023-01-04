@@ -8,7 +8,7 @@ const saveImage = async (req, res) => {
     const DATABASE_NAME = 'openai';
     const dbCollection = 'images';
 
-    MongoClient.connect(`mongodb://${process.env.MONGO_DB_USERNAME}:${process.env.MONGO_DB_PWD}@mongodb:27017`, function(err, client){
+    MongoClient.connect(`mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@localhost:27017`, function(err, client){
         if (err) throw err;
         
         try {
