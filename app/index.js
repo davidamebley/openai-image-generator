@@ -24,12 +24,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Temp snippet
-app.get('/saved-images', (req, res) =>{
+app.get('/saved-images', async (req, res) =>{
     res.render('./public/views/pages/saved-images', {
         images: ['mop', 'broom', 'duster']  
     });
-    console.log('Arraaay... ', getImages())
-    getSavedImages.getImages();
+    const temp = await getSavedImages.sendImages()
+    console.log('Arraaay... ', temp)
+    // getSavedImages.getImages();
 });
 
 // Add route  //require('./routes/openaiRoutes')

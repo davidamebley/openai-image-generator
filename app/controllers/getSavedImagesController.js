@@ -1,5 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 
+let myImages;
+
 const getImages = async (req, res) => {
     let response = res;
     const DATABASE_NAME = 'openai';
@@ -17,7 +19,8 @@ const getImages = async (req, res) => {
                 if (err) throw err;
                 console.log('Returned documents: ',result);
                 client.close();
-                return await result;
+                
+                myImages = 352352;
             });
 
         } catch (error) {
@@ -26,4 +29,8 @@ const getImages = async (req, res) => {
     });
 }
 
-module.exports = {getImages,};
+const sendImages = async () => {
+    return myImages
+}
+
+module.exports = {getImages, myImages, sendImages};
